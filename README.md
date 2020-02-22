@@ -10,8 +10,8 @@
         install.conf    <-- config defining the links: source -> dest
         install.sh      <-- installation script
         wallpapers      <-- all wallpaper files
-            4k          <-- 4k wallpapers for xps15 setup
-            ultrawide   <-- ultra-wide wallpapers for pc setup
+            4k          <-- 4k wallpapers
+            ultrawide   <-- ultra-wide wallpapers
 
 ## Install Packages
 
@@ -37,9 +37,7 @@ Followed by any specific packages under the corresponding directory.
 
 ## Install Dotfiles
 
-Install ZIM framework before dotfiles: https://github.com/zimfw/zimfw/blob/master/README.md
-
-The installation scripts are located under `/scripts`.
+The installation scripts are located under the root directory of the repository.
 Run the script corresponding to the relevant setup.
 
 ## Services To Enable
