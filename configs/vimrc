@@ -1,0 +1,432 @@
+" No vi compatibility
+    set nocompatible
+
+" No line wrapping
+    set nowrap
+
+" Max width 120
+    "set textwidth=120
+
+" Indents
+    filetype plugin indent on
+
+" show existing tab with 4 spaces width
+    set tabstop=4
+
+" when indenting with '>', use 4 spaces width
+    set shiftwidth=4
+
+" On pressing tab, insert 4 spaces
+    set expandtab
+
+" Smart tab
+    set smarttab
+
+" Highlight searches
+    "set hlsearch
+
+" Show results as typing
+    set incsearch
+
+" Regex
+    set magic
+
+" Blick Match
+    set mat=2
+
+" Reload changes outside of vim
+    set autoread
+
+" Encoding
+    set termencoding=utf-8
+
+" Lazy Redraw, fix lag.
+    set lazyredraw
+    set noshowcmd
+
+" Set leader key
+    map <Space> <leader>
+
+" Always show status bar
+    set laststatus=2
+
+" Syntax Highlighting
+    syntax enable
+
+" Normal Backspace
+    set backspace=indent,eol,start
+
+" Line Numbers
+    set number
+
+" Show matching brackets
+    set showmatch
+
+" Code Folding
+    set foldenable
+    set foldlevelstart=10       " 10 levels when opening file
+    set foldnestmax=10          " 10 nested fold max
+    set foldmethod=syntax
+    nnoremap <leader><space> za
+
+" Fuzzy Finder
+    set rtp+=~/.fzf
+
+    "set hidden                  " hide buffers instead of closing them this
+    set switchbuf=useopen       " reveal already opened files from the
+    set history=1000            " remember more commands and search history
+    set undolevels=1000         " use many muchos levels of undo
+
+    if v:version >= 730
+       set undofile             " keep a persistent backup file
+       set undodir=~/.vim/.undo,~/tmp,/tmp
+    endif
+
+    set nobackup                 " do not keep backup files, it's 70's style cluttering
+    "set noswapfile              " do not write annoying intermediate swap files,
+    set directory=~/.vim/.tmp,~/tmp,/tmp
+    set viminfo='20,\"80         " read/write a .viminfo file, don't store more than 80 lines of registers
+    "set wildmenu                " make tab completion for files/buffers act like bash
+    "set wildmode=list:full      " show a list when pressing tab and complete
+    set wildignore=*.swp,*.bak,*.pyc,*.class
+    set title                   " change the terminal's title
+    set visualbell              " don't beep
+    set noerrorbells            " don't beep
+    set nomodeline              " disable mode lines (security measure)
+    set ttyfast                 " always use a fast terminal
+    "set cursorline             " underline the current line, for quick orientation
+    set pastetoggle=<leader>p
+
+    " Turn on hard time
+    let g:hardtime_default_on = 0
+
+" ============== Split Windows ==============
+
+    nmap <leader>swh  :topleft  vnew<CR>
+    nmap <leader>swl :botright vnew<CR>
+    nmap <leader>swk    :topleft  new<CR>
+    nmap <leader>swj  :botright new<CR>
+
+" ============== Split Buffers ==============
+
+    nmap <leader>sh   :leftabove  vnew<CR>
+    nmap <leader>sl  :rightbelow vnew<CR>
+    nmap <leader>sk     :leftabove  new<CR>
+    nmap <leader>sj   :rightbelow new<CR>
+
+" ============== Navigate vim splits ==============
+    nnoremap <leader>j <C-W><C-J>
+    nnoremap <leader>k <C-W><C-K>
+    nnoremap <leader>l <C-W><C-L>
+    nnoremap <leader>h <C-W><C-H>
+
+" ============== Resize vim splits ==============
+"
+    noremap <leader>+ :res +5<cr>
+    noremap <leader>_ :res -5<cr>
+    noremap <leader>= :vertical resize +5<cr>
+    noremap <leader>- :vertical resize -5<cr>
+
+" ============== Custom Functions and Bindings ==============
+
+    nnoremap ; :
+    nmap <leader>n :NERDTreeToggle<cr>
+    nmap <leader>f :FZF<cr>
+    nmap <leader>F :FZF ~/<cr>
+    nmap <leader>r :source ~/.config/nvim/init.vim<cr>
+    nmap <leader>>> :IndentLinesToggle<cr>
+    nmap <leader>t  :TagbarToggle<cr>
+    map 0 ^
+
+    function! NumberToggle()
+        if(&relativenumber == 1)
+            set norelativenumber
+        else
+            set relativenumber
+        endif
+    endfunc
+
+    nnoremap <leader>R :call NumberToggle()<cr>
+
+    " Removes trailing spaces
+    function! TrimWhiteSpace()
+        %s/\s\+$//e
+    endfunction
+
+    "nnoremap <silent> <Leader>w :call TrimWhiteSpace()<CR>
+
+" ============== Gradle ==============
+    nmap <leader>m :compiler gradle <bar> :make build<cr>
+
+" ============== Java ==============
+
+    nmap <leader>em :MvnRepo<cr>
+    nmap <leader>ep :ProjectImport .<cr>
+    nmap <leader>el :ProjectList<cr>
+    nmap <leader>et :ProjectTree<cr>
+    nmap <leader>eI :JavaImport<cr>
+    nmap <leader>ei :JavaImportOrganize<cr>
+    nmap <leader>eo :JavaImpl<cr>
+    nmap <leader>eg :JavaGetSet<cr>
+    nmap <leader>ed :JavaDocPreview<cr>
+    nmap <leader>eb :Java<cr>
+    nmap <leader>er :JavaRename
+    nmap <leader>ev :Validate<cr>
+
+" ============== Git Fugitive ==============
+"
+    nnoremap <leader>ga :Git add %:p<CR><CR>
+    nnoremap <leader>gs :Gstatus<CR>
+    nnoremap <leader>gc :Gcommit -v -q<CR>
+    nnoremap <leader>gt :Gcommit -v -q %:p<CR>
+    nnoremap <leader>gd :Gdiff<CR>
+    nnoremap <leader>ge :Gedit<CR>
+    nnoremap <leader>gr :Gread<CR>
+    nnoremap <leader>gw :Gwrite<CR><CR>
+    nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+    nnoremap <leader>gp :Ggrep<Space>
+    nnoremap <leader>gm :Gmove<Space>
+    nnoremap <leader>gb :Git branch<Space>
+    nnoremap <leader>go :Git checkout<Space>
+    nnoremap <leader>gps :Dispatch! git push<CR>
+    nnoremap <leader>gpl :Dispatch! git pull<CR>
+
+    set diffopt+=vertical
+
+" ============== Auto Commands ==============
+
+augroup vimrc
+    autocmd!
+    " Override colorscheme background transparency
+    autocmd ColorScheme * highlight Normal ctermbg=Black
+augroup END
+
+autocmd vimrc BufWritePost * Neomake
+autocmd! BufWritePost * if &ft != 'java' | Neomake
+autocmd vimrc BufWritePre * :call TrimWhiteSpace()                                  "Auto-remove trailing spaces
+" autocmd vimrc InsertLeave * NeoSnippetClearMarkers                                "Remove unused markers for snippets
+autocmd vimrc InsertEnter * :set nocul                                              "Remove cursorline highlight
+autocmd vimrc InsertLeave * :set cul                                                "Add cursorline highlight in normal mode
+autocmd vimrc FileType html,javascript,coffee,cucumber setlocal sw=4 sts=4 ts=4   "Set 2 indent for html
+autocmd vimrc FileType php,javascript setlocal sw=4 sts=4 ts=4                    "Set right margin only for php and js
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+"
+" autocmd vimrc VimEnter * set vb t_vb=
+"
+" autocmd vimrc FileType nerdtree syntax match hideBracketsInNerdTree
+            " \ "\]" contained conceal containedin=ALL
+
+" Remember cursor position when opening files
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+" =============== Plugged Package Manager ===============
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ap/vim-css-color'
+Plug 'alvan/vim-closetag'
+Plug 'flazz/vim-colorschemes'
+Plug 'matze/vim-move'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tfnico/vim-gradle'
+Plug 'xuhdev/vim-latex-live-preview'
+Plug 'sheerun/vim-polyglot'
+Plug 'ryanoasis/vim-devicons'
+Plug 'altercation/vim-colors-solarized'
+Plug 'starcraftman/vim-eclim'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/neosnippet.vim'
+Plug 'shougo/neosnippet-snippets'
+Plug 'benekastah/neomake'
+Plug 'dojoteef/neomake-autolint'
+Plug 'yggdroot/indentline'
+Plug 'mattn/emmet-vim'
+Plug 'majutsushi/tagbar'
+Plug 'danro/rename.vim'
+Plug 'lervag/vimtex'
+Plug 'raimondi/delimitmate'
+Plug 'airblade/vim-rooter'
+Plug 'junegunn/goyo.vim'
+Plug 'mxw/vim-jsx'
+Plug 'isruslan/vim-es6'
+Plug 'eslint/eslint'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'dylanaraps/wal'
+Plug 'chrisbra/colorizer'
+
+call plug#end()
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:livepreview_previewer = 'zathura'
+nnoremap <leader>T :LLPStartPreview<CR>
+
+
+" ============= Project Root ==============
+
+let g:rooter_patterns = ['.vimroot', '.git/', 'node_modules/', 'build.gradle', 'README.md', 'LICENSE']
+
+augroup vimrc_rooter
+    autocmd VimEnter * :Rooter
+augroup END
+
+" ============= Vim-Move ===============
+
+let g:move_key_modifier = 'C'
+
+" ============= NERD-Commenter ===============
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" ============= TernJS ==============
+let g:tern_request_timeout = 1
+let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
+
+"Add extra filetypes
+let g:tern#filetypes = [
+                \ 'jsx',
+                \ 'javascript.jsx',
+                \ 'vue',
+                \ '...'
+                \ ]
+
+" ============= Neomake ===============
+
+let g:neomake_warning_sign={'text': '!', 'texthl': 'SyntasticWarningSign'}
+let g:neomake_error_sign={'text': '✖' , 'texthl': 'SyntasticErrorSign'}
+
+" JS ES6
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" Java
+let g:neomake_java_javac_maker = {
+    \ 'args': ['-d', '/tmp']
+    \ }
+let g:neomake_gradle_maker = { 'exe': 'gradle', 'args': ['build'] }
+
+" C++
+let g:neomake_cmake_maker = { 'exe': 'cmake', 'args': ['.'] }
+let g:neomake_cpp_enabled_makers=['gcc']
+let g:neomake_c_enabled_makers=['gcc']
+let g:neomake_cpp_clang_args=["-std=c++14", "-Wextra", "-Wall", "-fsyntax-only"]
+let g:neomake_cpp_gcc_args=["-std=c++14", "-Wextra", "-Wall", "-fsyntax-only"]
+let g:neomake_c_clang_args=["-Wextra", "-Wall", "-fsyntax-only"]
+let g:neomake_c_gcc_args=["-Wextra", "-Wall", "-fsyntax-only"]
+
+
+""""" FZF """"""
+
+" Mapping selecting mappings
+"nmap <leader><tab> <plug>(fzf-maps-n)
+"xmap <leader><tab> <plug>(fzf-maps-x)
+"omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+"map <leader>z <plug>(fzf-complete-word)
+"map <leader><tab>j <plug>(fzf-complete-path)
+"map <leader><tab>k <plug>(fzf-complete-file-ag)
+"map <leader><tab>l <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+"inoremap <leader>z fzf#vim#complete#word({'left': '14%'})
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~25%' }
+
+" In Neovim, you can set up fzf window using a Vim command
+"let g:fzf_layout = { 'window': 'enew' }
+"let g:fzf_layout = { 'window': '-tabnew' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Deoplete completion engine
+
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#omni_patterns = {}
+let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = []
+let g:deoplete#file#enable_buffer_path = 1
+
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" eclim Completion
+let g:EclimCompletionMethod = 'omnifunc'
+
+"""""""""""""""" AirLine - PowerLine Replacement """""""""""""""""
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme='distinguished'
+
+set guifont="Literation Mono Powerline Nerd Font Complete 11"
+"colorscheme bubblegum-256-dark
+" Set colorscheme
+    colorscheme wal

@@ -1,0 +1,127 @@
+set surround
+set incsearh
+set smartcase
+
+" No vi compatibility
+    set nocompatible
+
+" No line wrapping
+    set nowrap
+
+" Max width 120
+    "set textwidth=120
+
+" Indents
+    filetype plugin indent on
+
+" show existing tab with 4 spaces width
+    set tabstop=4
+
+" when indenting with '>', use 4 spaces width
+    set shiftwidth=4
+
+" On pressing tab, insert 4 spaces
+    set expandtab
+
+" Smart tab
+    set smarttab
+
+" Highlight searches
+    "set hlsearch
+
+" Show results as typing
+    set incsearch
+
+" Regex
+    set magic
+
+" Blick Match
+    set mat=2
+
+" Reload changes outside of vim
+    set autoread
+
+" Encoding
+    set termencoding=utf-8
+
+" Lazy Redraw, fix lag.
+    set lazyredraw
+    set noshowcmd
+
+" Always show status bar
+    set laststatus=2
+
+" Syntax Highlighting
+    syntax enable
+
+" Normal Backspace
+    set backspace=indent,eol,start
+
+" Line Numbers
+    set number
+
+" Show matching brackets
+    set showmatch
+
+" Code Folding
+    set foldenable
+    set foldlevelstart=10       " 10 levels when opening file
+    set foldnestmax=10          " 10 nested fold max
+    set foldmethod=syntax
+    nnoremap <leader><space> za
+
+" Fuzzy Finder
+    set rtp+=~/.fzf
+
+    "set hidden                  " hide buffers instead of closing them this
+    set switchbuf=useopen       " reveal already opened files from the
+    set history=1000            " remember more commands and search history
+    set undolevels=1000         " use many muchos levels of undo
+
+    if v:version >= 730
+    ¦  set undofile             " keep a persistent backup file
+    ¦  set undodir=~/.vim/.undo,~/tmp,/tmp
+    endif
+
+    set nobackup                 " do not keep backup files, it's 70's style cluttering
+    "set noswapfile              " do not write annoying intermediate swap files,
+    set directory=~/.vim/.tmp,~/tmp,/tmp
+    set viminfo='20,\"80         " read/write a .viminfo file, don't store more than 80 l
+    "set wildmenu                " make tab completion for files/buffers act like bash
+    "set wildmode=list:full      " show a list when pressing tab and complete
+    set wildignore=*.swp,*.bak,*.pyc,*.class
+    set title                   " change the terminal's title
+    set visualbell              " don't beep
+    set noerrorbells            " don't beep
+    set nomodeline              " disable mode lines (security measure)
+    set ttyfast                 " always use a fast terminal
+    "set cursorline             " underline the current line, for quick orientation
+    set pastetoggle=<leader>p
+
+
+nnoremap ,e :action SearchEverywhere<CR>
+nnoremap ,g :action FindInPath<CR>
+nnoremap ,s :action FileStructurePopup<CR>
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gb :action JumpToLastChange<CR>
+
+nnoremap H :action TypeHierarchy<CR>
+nnoremap G :action Generate<CR>
+nnoremap U :action FindUsages<CR>
+nnoremap R :action RenameElement<CR>
+
+nnoremap == :action ReformatCode<CR>
+vnoremap == :action ReformatCode<CR>
+
+nnoremap cc :action CommentByLineComment<CR>
+vnoremap cc :action CommentByLineComment<CR>
+
+nnoremap <C-Space> :action ShowIntentionActions<CR>
+nnoremap <Space> :action CodeCompletion<CR>
+nnoremap <S-Space> :action SmartTypeCompletion<CR>
+
+nnoremap ga :action GotoAction<CR>
+vnoremap ga :action GotoAction<CR>

@@ -1,0 +1,263 @@
+# Start configuration added by Zim install {{{
+#
+# User configuration sourced by interactive shells
+#
+
+# -----------------
+# Zsh configuration
+# -----------------
+
+#
+# History
+#
+
+# Remove older command from the history if a duplicate is to be added.
+setopt HIST_IGNORE_ALL_DUPS
+
+#
+# Input/output
+#
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -v
+
+# Prompt for spelling correction of commands.
+#setopt CORRECT
+
+# Customize spelling correction prompt.
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+
+# --------------------
+# Module configuration
+# --------------------
+
+#
+# completion
+#
+
+# Set a custom path for the completion dump file.
+# If none is provided, the default ${ZDOTDIR:-${HOME}}/.zcompdump is used.
+#zstyle ':zim:completion' dumpfile "${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+
+#
+# git
+#
+
+# Set a custom prefix for the generated aliases. The default prefix is 'G'.
+#zstyle ':zim:git' aliases-prefix 'g'
+
+#
+# input
+#
+
+# Append `../` to your input for each `.` you type after an initial `..`
+zstyle ':zim:input' double-dot-expand yes
+
+#
+# termtitle
+#
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
+#zstyle ':zim:termtitle' format '%1~'
+
+#
+# zsh-autosuggestions
+#
+
+# Customize the style that the suggestions are shown with.
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+#
+#
+# Suggestion checks history first and then history if none found
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-strategy
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+#
+# zsh-syntax-highlighting
+#
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=10'
+
+# ------------------
+# Initialize modules
+# ------------------
+
+if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  # Update static initialization script if it's outdated, before sourcing it
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+source ${ZIM_HOME}/init.zsh
+
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
+
+#
+# zsh-history-substring-search
+#
+
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Bind up and down keys
+zmodload -F zsh/terminfo +p:terminfo
+if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
+  bindkey ${terminfo[kcuu1]} history-substring-search-up
+  bindkey ${terminfo[kcud1]} history-substring-search-down
+fi
+
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+# }}} End configuration added by Zim install
+
+#
+# User configuration sourced by interactive shells
+#
+#
+
+###########
+# Exports #
+###########
+
+# Default Text Editor
+export VISUAL="nvim"
+
+# Vim Pager
+export PAGER='vimpager'
+
+# Define zim location
+export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+
+# Fix ZSH completion command duplication bug
+export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.UTF-8
+
+export GDK_SCALE=2
+
+###########
+
+
+##############
+# ZSH Config #
+##############
+
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=1000000
+setopt appendhistory autocd extendedglob nomatch
+unsetopt beep
+bindkey -v
+zstyle :compinstall filename '/home/tony/.zshrc'
+autoload -Uz compinit
+compinit
+
+##############
+
+
+######################
+# Shell Integrations #
+######################
+
+# Start ZIM - Zsh IMproved integration
+[[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh
+
+# Add ruby to path - Ruby integration
+PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+
+# FZF integration
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+######################
+
+#############
+# Functions #
+#############
+
+# Tree List
+function ltree()
+{
+    tree -L $1 $2 | less
+}
+
+# Brightness - My little util that saves me hours of battery
+function brightness()
+{
+    if [ $# -eq 0 ]; then
+        echo $(cat /sys/class/backlight/intel_backlight/actual_brightness)
+    else
+        max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+        if [ $1 -le $max_brightness ]; then
+            sudo tee /sys/class/backlight/intel_backlight/brightness <<< $1
+        else
+            echo "Too High. Max brightness is $max_brightness."
+        fi
+    fi
+}
+
+# Open PDF files with zathura
+function viewPDF()
+{
+    if [ $# -ne 1 ]; then
+        echo "Requires 1 argument. The file to view."
+    else
+        zathura "$1" &
+    fi
+}
+
+###########
+# Aliases #
+###########
+
+unalias ls
+unalias ll
+
+# Navigation
+alias ll=ranger
+alias ls=lsd
+alias lt=ltree
+
+# GPU
+alias gpu='sudo cat /proc/acpi/bbswitch'
+alias gpuon='sudo tee /proc/acpi/bbswitch <<< ON'
+alias gpuoff='sudo tee /proc/acpi/bbswitch <<< OFF'
+
+# Useful
+alias c=clear
+alias vim=nvim
+alias ports='ss -tulanp | less'
+alias less=$PAGER
+alias br=brightness
+alias pdf=viewPDF
+alias cw='feh --bg-scale --randomize ~/.config/wallpapers'
+alias vpn='sudo openvpn ~/.vpn/client.ovpn'
+alias cpufreq='watch -n 0 grep \"cpu MHz\" /proc/cpuinfo'
+alias temps='watch -n 0 sensors'
+alias dockwork='sh ~/.scripts/work-dock.sh'
+alias dockhome='sh ~/.scripts/home-dock.sh'
+alias fanoff='i8kfan 0 0'
+alias fanlow='i8kfan 1 1'
+alias fanhigh='i8kfan 2 2'
+alias turbo='echo "0" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo'
+alias turbooff='echo "1" | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo'
+alias nom2='mv ~/.m2/settings.xml ~/.m2/settings.xml.old'
+alias m2='mv ~/.m2/settings.xml.old ~/.m2/settings.xml'
+
+
+fortune | cowsay | lolcat

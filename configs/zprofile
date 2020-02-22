@@ -1,0 +1,11 @@
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx
+fi
+
+setxkbmap gb
+setxkbmap -option caps:swapescape
+xset r rate 400 30
+export LC_ALL=C
+export _JAVA_AWT_WM_NONREPARENTING=1
+wmname LG3G
+picom -b
