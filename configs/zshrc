@@ -74,10 +74,9 @@ zstyle ':zim:input' double-dot-expand yes
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
 #
-#
-# Suggestion checks history first and then history if none found
+# Having history too seemed to introduce too much lag
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-strategy
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
 #
 # zsh-syntax-highlighting

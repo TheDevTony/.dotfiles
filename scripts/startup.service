@@ -2,7 +2,10 @@
 Description=Startup Service
 
 [Service]
+Type=oneshot
 ExecStart=/home/tony/.scripts/startup.sh
+RemainAfterExit=true
+StandardOutput=journal
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
