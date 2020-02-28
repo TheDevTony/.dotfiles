@@ -1,5 +1,6 @@
 android-tools
 android-udev
+autorandr
 bolt
 bbswitch
 bumblebee

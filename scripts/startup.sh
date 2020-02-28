@@ -6,4 +6,4 @@ xset r rate 400 30
 export LC_ALL=C
 export _JAVA_AWT_WM_NONREPARENTING=1
 wmname LG3G
-picom --experimental-backends -b &
+picom -b &
