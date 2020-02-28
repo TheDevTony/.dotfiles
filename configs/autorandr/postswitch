@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#pkill picom
+nitrogen --restore
+pkill polybar
+sh ~/.config/polybar/launch.sh
+
