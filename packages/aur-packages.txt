@@ -16,3 +16,8 @@ slack-desktop
 smbios-thermal-ctl
 spotify
 tlpui-git
+nerd-fonts-complete:W
+spotify-tui
+intel-undervolt
+ttf-ionicons
+gitkraken
