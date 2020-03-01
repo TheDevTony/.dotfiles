@@ -11,4 +11,4 @@ rofi.color-normal: #CC000000, #CCFFFFFF, #CC000000, #CCFFFFFF, #CC000000
 rofi.color-urgent: argb:EE000000, #f43753, argb:EE000000, argb:EE000000, #e29a49
 rofi.color-active: argb:EE000000, #49bbfb, argb:EE000000, argb:EE000000, #e29a49
 rofi.kb-cancel: Escape,Alt+F1
-rofi.theme: /usr/share/rofi/themes/materia.rasi
+rofi.theme: materia.rasi
