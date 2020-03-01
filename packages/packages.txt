@@ -40,4 +40,5 @@ vimpager
 wmname
 zip
 unzip
+yay
 zathura

@@ -200,7 +200,7 @@ zstyle ':zim:input' double-dot-expand yes
 #
 # Having history too seemed to introduce too much lag
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-strategy
-ZSH_AUTOSUGGEST_STRATEGY=(completion)
+ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
