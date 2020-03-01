@@ -11,12 +11,9 @@ powerline-fonts-git
 pstate-frequency
 runelite
 slack-desktop
-spotifyd-full-bin
-spotify-tui
 spotify
 tlpui-git
 nerd-fonts-complete
-spotify-tui
 intel-undervolt
 ttf-ionicons
 gitkraken
